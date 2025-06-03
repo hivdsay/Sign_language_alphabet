@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASL Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ------------------ SIDEBAR ------------------ */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 220px; height: 100vh;
+    }
+      /* ------------------ İÇERİK KAPSAYICI ------------------ */
+    .main-container {
+      /* sayfayı tam ortalamak için */
+      max-width: 1040px;      /* 220px sidebar + 800px içerik + 20px padding sağ+sol */
+      margin: 0 auto;
+      padding-left: 220px;    /* sidebar genişliği */
+      padding-right: 20px;    
+      padding-top: 20px;
+    }
+    
+    /* header, main, footer kendi içinde ortalı */
+    .main-container > header,
+    .main-container > main,
+    .main-container > footer {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Başlık */
+    .main-container > header {
+      margin-bottom: 20px;
+    }
+    
+    /* Quiz kabı */
+    .quiz-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+    
+    /* Footer */
+    .main-container > footer {
+      background-color: #e1bee7;
+      color: #4a148c;
+      text-align: center;
+      padding: 18px 0;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+    
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .question {
+      margin-bottom: 24px;
+    }
+    .question img {
+      width: 100px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .question h3 {
+      margin-bottom: 8px;
+      color: #6a1b9a;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    #submitBtn {
+      background: linear-gradient(to right, #7f53ac, #647dee);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #result {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 24px;
+      color: #2e7d32;
+    }
+    
+  </style>
+</head>
+<body>
+  
+
+  <nav>
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="learn.html">🔤 Learn Alphabet</a></li>
+      <li><a href="quiz.html">📝 Quiz</a></li>
+      <li><a href="my_results.html">📊 My Results</a></li>
+      <li><a href="camera.html">📷 AI Test</a></li>
+      
+      <!-- Giriş yapılmamışsa görünenler -->
+      <li id="loginLink"><a href="login.html">🔐 Login</a></li>
+      <li id="registerLink"><a href="register.html">📝 Register</a></li>
+      
+      <!-- Giriş yapılmışsa görünenler -->
+      <li id="profileLink" style="display: none;"><a href="profile.html">👤 Profile</a></li>
+      <li id="logoutLink" style="display: none;"><a href="#" id="logoutBtn">📕 Logout</a></li>
+    </ul>
+  </nav>
+    
+   <!-- İçerik -->
+   <div class="main-container">
+    <!-- Başlık -->
+    <header>
+      <h1>📝 Test Your ASL Knowledge</h1>
+      <p class="subtitle">Answer the questions below and see how well you know the ASL alphabet!</p>
+    </header>
+
+  <main>
+    <div class="quiz-container">
+      <!-- Question 1 -->
+      <div class="question">
+        <img src="assets/images/A.jpg" alt="ASL A">
+        <h3>1. Which letter is represented by this sign?</h3>
+        <div class="options">
+          <label><input type="radio" name="q1" value="A"> A</label>
+          <label><input type="radio" name="q1" value="B"> B</label>
+          <label><input type="radio" name="q1" value="C"> C</label>
+          <label><input type="radio" name="q1" value="D"> D</label>
+        </div>
+      </div>
+      <!-- Question 2 -->
+      <div class="question">
+        <img src="assets/images/B.jpg" alt="ASL B">
+        <h3>2. Which letter is shown here?</h3>
+        <div class="options">
+          <label><input type="radio" name="q2" value="A"> A</label>
+          <label><input type="radio" name="q2" value="B"> B</label>
+          <label><input type="radio" name="q2" value="C"> C</label>
+          <label><input type="radio" name="q2" value="D"> D</label>
+        </div>
+      </div>
+      <!-- Question 3 -->
+      <div class="question">
+        <img src="assets/images/C.jpg" alt="ASL C">
+        <h3>3. What letter does this represent?</h3>
+        <div class="options">
+          <label><input type="radio" name="q3" value="A"> A</label>
+          <label><input type="radio" name="q3" value="B"> B</label>
+          <label><input type="radio" name="q3" value="C"> C</label>
+          <label><input type="radio" name="q3" value="D"> D</label>
+        </div>
+      </div>
+
+         <!-- Question 4 -->
+<div class="question">
+    <h3>4. Which of the following signs represents the letter F?</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q4" value="A"> <img src="assets/images/A.jpg" alt="Option A" /></label>
+      <label><input type="radio" name="q4" value="B"> <img src="assets/images/B.jpg" alt="Option B" /></label>
+      <label><input type="radio" name="q4" value="F"> <img src="assets/images/F.jpg" alt="Option F" /></label>
+      <label><input type="radio" name="q4" value="C"> <img src="assets/images/C.jpg" alt="Option C" /></label>
+    </div>
+  </div>
+  
+  <!-- Question 5 -->
+  <div class="question">
+    <img src="assets/images/J.jpg" alt="ASL J">
+    <h3>5. What letter is represented by this sign?</h3>
+    <div class="options">
+      <label><input type="radio" name="q5" value="I"> I</label>
+      <label><input type="radio" name="q5" value="J"> J</label>
+      <label><input type="radio" name="q5" value="L"> L</label>
+      <label><input type="radio" name="q5" value="K"> K</label>
+    </div>
+  </div>
+  
+  <!-- Question 6 -->
+  <div class="question">
+    <img src="assets/images/M.jpg" alt="ASL M">
+    <h3>6. Identify the letter for this hand sign:</h3>
+    <div class="options">
+      <label><input type="radio" name="q6" value="N"> N</label>
+      <label><input type="radio" name="q6" value="M"> M</label>
+      <label><input type="radio" name="q6" value="O"> O</label>
+      <label><input type="radio" name="q6" value="W"> W</label>
+    </div>
+  </div>
+  
+  <!-- Question 7 -->
+  <div class="question">
+    <h3>7. Which of the following is the correct sign for the letter Z?</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q7" value="X"> <img src="assets/images/X.jpg" alt="Option X" /></label>
+      <label><input type="radio" name="q7" value="Y"> <img src="assets/images/Y.jpg" alt="Option Y" /></label>
+      <label><input type="radio" name="q7" value="Z"> <img src="assets/images/Z.jpg" alt="Option Z" /></label>
+      <label><input type="radio" name="q7" value="W"> <img src="assets/images/W.jpg" alt="Option W" /></label>
+    </div>
+  </div>
+  
+  <!-- Question 8 -->
+  <div class="question">
+    <img src="assets/images/E.jpg" alt="ASL E">
+    <h3>8. What does this sign represent?</h3>
+    <div class="options">
+      <label><input type="radio" name="q8" value="D"> D</label>
+      <label><input type="radio" name="q8" value="E"> E</label>
+      <label><input type="radio" name="q8" value="F"> F</label>
+      <label><input type="radio" name="q8" value="G"> G</label>
+    </div>
+  </div>
+  
+  <!-- Question 9 -->
+  <div class="question">
+    <h3>9. Select the image that shows the letter K in ASL.</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q9" value="K"> <img src="assets/images/K.jpg" alt="Option K" /></label>
+      <label><input type="radio" name="q9" value="L"> <img src="assets/images/L.jpg" alt="Option L" /></label>
+      <label><input type="radio" name="q9" value="V"> <img src="assets/images/V.jpg" alt="Option V" /></label>
+      <label><input type="radio" name="q9" value="Y"> <img src="assets/images/Y.jpg" alt="Option Y" /></label>
+    </div>
+  </div>
+  
+  <!-- Question 10 -->
+  <div class="question">
+    <img src="assets/images/R.jpg" alt="ASL R">
+    <h3>10. Which letter is shown in this sign?</h3>
+    <div class="options">
+      <label><input type="radio" name="q10" value="P"> P</label>
+      <label><input type="radio" name="q10" value="R"> R</label>
+      <label><input type="radio" name="q10" value="Q"> Q</label>
+      <label><input type="radio" name="q10" value="S"> S</label>
+    </div>
+  </div> 
+    <!-- Question 11 -->
+<div class="question">
+    <h3>11. Which of the following signs stands for the letter N?</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q11" value="M"> <img src="assets/images/M.jpg" alt="Option M" /></label>
+      <label><input type="radio" name="q11" value="N"> <img src="assets/images/N.jpg" alt="Option N" /></label>
+      <label><input type="radio" name="q11" value="H"> <img src="assets/images/H.jpg" alt="Option H" /></label>
+      <label><input type="radio" name="q11" value="I"> <img src="assets/images/I.jpg" alt="Option I" /></label>
+    </div>
+  </div>
+  
+  <!-- Question 12 -->
+  <div class="question">
+    <img src="assets/images/O.jpg" alt="ASL O">
+    <h3>12. What letter is this hand sign?</h3>
+    <div class="options">
+      <label><input type="radio" name="q12" value="O"> O</label>
+      <label><input type="radio" name="q12" value="Q"> Q</label>
+      <label><input type="radio" name="q12" value="P"> P</label>
+      <label><input type="radio" name="q12" value="R"> R</label>
+    </div>
+  </div>
+  
+  <!-- Question 13 -->
+  <div class="question">
+    <h3>13. Select the correct image for the letter T.</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q13" value="T"> <img src="assets/images/T.jpg" alt="Option T" /></label>
+      <label><input type="radio" name="q13" value="S"> <img src="assets/images/S.jpg" alt="Option S" /></label>
+      <label><input type="radio" name="q13" value="X"> <img src="assets/images/X.jpg" alt="Option X" /></label>
+      <label><input type="radio" name="q13" value="Z"> <img src="assets/images/Z.jpg" alt="Option Z" /></label>
+    </div>
+  </div>
+  
+  <!-- Question 14 -->
+  <div class="question">
+    <img src="assets/images/Y.jpg" alt="ASL Y">
+    <h3>14. What letter does this ASL sign represent?</h3>
+    <div class="options">
+      <label><input type="radio" name="q14" value="V"> V</label>
+      <label><input type="radio" name="q14" value="W"> W</label>
+      <label><input type="radio" name="q14" value="Y"> Y</label>
+      <label><input type="radio" name="q14" value="Z"> Z</label>
+    </div>
+  </div>
+  
+  <!-- Question 15 -->
+  <div class="question">
+    <h3>15. Which of the following is the correct ASL sign for the letter H?</h3>
+    <div class="options grid">
+      <label><input type="radio" name="q15" value="F"> <img src="assets/images/F.jpg" alt="Option F" /></label>
+      <label><input type="radio" name="q15" value="G"> <img src="assets/images/G.jpg" alt="Option G" /></label>
+      <label><input type="radio" name="q15" value="H"> <img src="assets/images/H.jpg" alt="Option H" /></label>
+      <label><input type="radio" name="q15" value="I"> <img src="assets/images/I.jpg" alt="Option I" /></label>
+    </div>
+  </div>
+  
+
+  <button id="submitBtn">Check Answers</button>
+      <div id="result"></div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Sign Language Project | Made with 🤍
+  </footer>
+</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Navbar kontrolü
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    const profileLink = document.getElementById("profileLink");
+    const logoutLink = document.getElementById("logoutLink");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginLink.style.display = "none";
+        registerLink.style.display = "none";
+        profileLink.style.display = "inline";
+        logoutLink.style.display = "inline";
+      } else {
+        loginLink.style.display = "inline";
+        registerLink.style.display = "inline";
+        profileLink.style.display = "none";
+        logoutLink.style.display = "none";
+      }
+    });
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        signOut(auth).then(() => {
+          alert("👋 You have been signed out.");
+          window.location.href = "index.html";
+        }).catch((error) => {
+          alert("❌ Error signing out: " + error.message);
+        });
+      });
+    }
+
+    // Quiz cevaplarını kontrol et
+    const submitBtn = document.getElementById("submitBtn");
+    const resultDiv = document.getElementById("result");
+
+    submitBtn.addEventListener("click", async () => {
+      const correctAnswers = {
+        q1: "A", q2: "B", q3: "C", q4: "F", q5: "J",
+        q6: "M", q7: "Z", q8: "E", q9: "K", q10: "R",
+        q11: "N", q12: "O", q13: "T", q14: "Y", q15: "H"
+      };
+
+      let score = 0;
+      for (const [key, value] of Object.entries(correctAnswers)) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === value) {
+          score++;
+        }
+      }
+
+      resultDiv.textContent = `✅ You got ${score} out of 15 correct!`;
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            await addDoc(collection(db, "quizResults"), {
+              email: user.email,
+              userId: user.uid,
+              score: score,
+              timestamp: serverTimestamp()
+            });
+            resultDiv.textContent += " ✅ Your score has been saved.";
+          } catch (error) {
+            resultDiv.textContent += ` ❌ Failed to save: ${error.message}`;
+          }
+        } else {
+          resultDiv.textContent += " ⚠️ You must be logged in to save your result.";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+

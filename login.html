@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - ASL Learning</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>🔐 Welcome Back</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="📧 Email" required />
+      <input type="password" id="password" placeholder="🔒 Password" required />
+      <button type="submit" class="button">Login</button>
+    </form>
+    <div id="successMessage">✅ Login successful! Redirecting...</div>
+    <div class="links">
+      <p>Don't have an account? <a href="register.html">Register here</a></p>
+      <p>Are you an admin? <a href="admin-login.html">Login as Admin</a></p>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("loginForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          successMessage.style.display = "block";
+
+          setTimeout(() => {
+            if (userData.role === "admin") {
+              window.location.href = "admin.html";
+            } else {
+              window.location.href = "index.html";
+            }
+          }, 2000);
+        } else {
+          alert("⚠️ No user data found.");
+        }
+      } catch (error) {
+        alert("❌ " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

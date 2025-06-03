@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn ASL Alphabet</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Grid ve Card stilleri + Header ortalama -->
+  <style>
+    /* 1) İçerik kapsayıcısı: tüm sayfayı ortalar, sidebar’a göre 220px iç boşluk bırakır */
+.main-container {
+  max-width: 1180px;    /* 220px sidebar + 960px içerik */
+  margin: 0 auto;
+  padding-left: 220px;   /* sidebar genişliği */
+  padding-right: 20px;
+}
+
+/* 2) Header, main ve footer kendi içinde ortalanır */
+.main-container > header,
+.main-container > main,
+.main-container > footer {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* 3) Header altı boşluk */
+.main-container > header {
+  margin-top: 20px;
+  margin-bottom: 24px;
+  text-align: center;    /* başlığı ortala */
+}
+
+/* 4) Footer’ı sayfanın en altına yerleştir */
+.main-container > footer {
+  margin: 40px auto 20px;
+  text-align: center;
+}
+
+
+
+    .letter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      justify-items: center;   /* sütun içindeki kartları da ortalar */
+    }
+    .letter-card {
+      width: 100%;
+      max-width: 300px;        /* her bir kart sabit genişlikte duracak */
+      /* … mevcut stilleriniz … */
+    }
+    .letter-card:hover {
+      transform: scale(1.03);
+    }
+    .letter-card img,
+    .letter-card video {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .letter-card h3 {
+      margin: 10px 0;
+      color: #6a1b9a;
+    }
+    .letter-card img {
+      height: 200px;
+      object-fit: contain;
+    }
+       
+  </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<nav>
+  <ul>
+    <li><a href="index.html">🏠 Ana Sayfa</a></li>
+    <li><a href="learn.html">🔤 Alfabe Öğrenin</a></li>
+    <li><a href="quiz.html">📝 Sınav</a></li>
+    <li><a href="my_results.html">📊 Sonuçlarım</a></li>
+    <li><a href="camera.html">📷 AI Testi</a></li>
+    <li id="loginLink"><a href="login.html">🔐 Giriş</a></li>
+    <li id="registerLink"><a href="register.html">📝 Kayıt</a></li>
+    <li id="profileLink" style="display:none"><a href="profile.html">👤 Profil</a></li>
+    <li id="logoutLink" style="display:none"><a href="#" id="logoutBtn">📕 Çıkış Yap</a></li>
+  </ul>
+</nav>
+
+<!-- Main Container -->
+<div class="main-container">
+
+  <!-- Header -->
+  <header>
+    <h1>🔤 Learn the ASL Alphabet</h1>
+    <p class="subtitle">
+      Understand the American Sign Language alphabet with examples, videos, and visual cues. Perfect for beginners!
+    </p>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Bölüm 1 -->
+    <section>
+      <h2>📘 What is the ASL Alphabet?</h2>
+      <p>
+        The American Sign Language (ASL) alphabet consists of 26 hand gestures that correspond to each letter of the English alphabet. These handshapes are used for spelling out names, places, or words that don’t have a specific sign.
+      </p>
+    </section>
+
+    <!-- Bölüm 2 -->
+    <section>
+      <h2>🧠 Tips for Learning Sign Language</h2>
+      <div class="tips-container" style="background-color: #fef9f5; border-radius: 14px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-size: 1rem; line-height: 1.8; color: #333;">
+        <ul style="padding-left: 20px; list-style: none;">
+          <li>⏳ <strong>Start slow:</strong> Learn a few signs at a time, don’t rush!</li>
+          <li>😄 <strong>Be expressive:</strong> Facial expressions are part of the grammar!</li>
+          <li>🔁 <strong>Practice regularly:</strong> Use flashcards, record yourself, or sign with a mirror.</li>
+          <li>🤲 <strong>Use both hands:</strong> For two-handed signs, make sure both are visible.</li>
+          <li>🎥 <strong>Watch native signers:</strong> Learn from ASL videos and real conversations.</li>
+          <li>❤️ <strong>Don't fear mistakes:</strong> Stay patient and consistent — you’re doing great!</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bölüm 3 -->
+    <section>
+      <h2>📌 Full ASL Alphabet Chart</h2>
+      <img src="assets/images/asl-chart.jpg" alt="ASL Alphabet Chart" style="width:100%; border-radius:12px;">
+      <p>
+        This chart provides a quick overview of all 26 ASL letters. Scroll down to explore each letter in detail with video demonstrations and descriptions.
+      </p>
+    </section>
+     
+     <!-- Harf Kartları -->
+     <section>
+      <h2>🔠 Explore Letters</h2>
+      <div style="display:flex; justify-content:center; margin:20px 0;">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="🔍 Search a letter..."
+          style="padding:8px 14px; border-radius:20px; border:1px solid #ccc; font-size:1rem; width:250px; box-shadow:0 2px 6px rgba(0,0,0,0.05); transition:0.3s ease;"
+          onfocus="this.style.outline='2px solid #a18cd1'"
+          onblur="this.style.outline='none'"
+        >
+      </div>
+      <div class="letter-grid">
+
+        <!-- Harf A -->
+        <div class="letter-card">
+            <h3>🅰️ Letter A</h3>
+            <img src="assets/images/A.jpg" alt="ASL A">
+            <video controls>
+              <source src="assets/videos/A.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p><strong>Description:</strong> Make a fist with the thumb resting along the side of the index finger.</p>
+          </div>
+          
+
+
+        <!-- Harf B -->
+        <div class="letter-card">
+          <h3>🅱️ Letter B</h3>
+          <img src="assets/images/B.jpg" alt="ASL B">
+          <video controls>
+            <source src="assets/videos/B.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p><strong>Description:</strong> Extend all four fingers upward while the thumb rests across the palm.</p>
+        </div>
+
+        <!-- Harf C -->
+        <div class="letter-card">
+          <h3>🅲 Letter C</h3>
+          <img src="assets/images/C.jpg" alt="ASL C">
+          <video controls>
+            <source src="assets/videos/C.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p><strong>Description:</strong> Form a curved hand to resemble the shape of the letter C.</p>
+        </div>
+
+   
+         <!-- Harf D -->
+        <div class="letter-card">
+           <h3>🅳 Letter D</h3>
+           <img src="assets/images/D.jpg" alt="ASL D">
+           <video controls>
+             <source src="assets/videos/D.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+           </video>
+           <p><strong>Description:</strong> Raise your index finger while the thumb and other fingers form a circle.</p>
+        </div>
+  
+        <!-- Harf E -->
+       <div class="letter-card">
+          <h3>🅴 Letter E</h3>
+          <img src="assets/images/E.jpg" alt="ASL E">
+          <video controls>
+             <source src="assets/videos/E.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+          </video>
+          <p><strong>Description:</strong> Bend all your fingers at the knuckles while keeping them close to the thumb.</p>
+       </div>
+  
+        <!-- Harf F -->
+        <div class="letter-card">
+          <h3>🅵 Letter F</h3>
+          <img src="assets/images/F.jpg" alt="ASL F">
+          <video controls>
+            <source src="assets/videos/F.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p><strong>Description:</strong> Touch the tip of your index finger to the tip of your thumb, forming a circle.</p>
+        </div>
+
+        <!-- Harf G -->
+       <div class="letter-card">
+         <h3>🅶 Letter G</h3>
+         <img src="assets/images/G.jpg" alt="ASL G">
+         <video controls>
+           <source src="assets/videos/G.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+         </video>
+         <p><strong>Description:</strong> Extend your index finger and thumb to the side, like a pinch gesture, palm facing inward.</p>
+       </div>
+  
+       <!-- Harf H -->
+       <div class="letter-card">
+          <h3>🅷 Letter H</h3>
+          <img src="assets/images/H.jpg" alt="ASL H">
+          <video controls>
+            <source src="assets/videos/H.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p><strong>Description:</strong> Extend your index and middle fingers together while the thumb and other fingers are tucked into the palm.</p>
+       </div>
+  
+      <!-- Harf I -->
+      <div class="letter-card">
+         <h3>🅸 Letter I</h3>
+         <img src="assets/images/I.jpg" alt="ASL I">
+         <video controls>
+           <source src="assets/videos/I.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+         </video>
+         <p><strong>Description:</strong> Raise your pinky finger while keeping the rest of the fingers in a fist.</p>
+      </div>
+
+      <!-- Harf J -->
+      <div class="letter-card">
+         <h3>🅹 Letter J</h3>
+         <img src="assets/images/J.jpg" alt="ASL J">
+         <video controls>
+            <source src="assets/videos/J.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+         </video>
+      <p><strong>Description:</strong> Use your pinky finger to trace the letter J in the air.</p>
+      </div>
+  
+      <!-- Harf K -->
+      <div class="letter-card">
+         <h3>🅺 Letter K</h3>
+         <img src="assets/images/K.jpg" alt="ASL K">
+         <video controls>
+           <source src="assets/videos/K.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+      <p><strong>Description:</strong> Extend your index and middle fingers upward and the thumb in between them, palm facing out.</p>
+      </div>
+  
+  <!-- Harf L -->
+  <div class="letter-card">
+    <h3>🅻 Letter L</h3>
+    <img src="assets/images/L.jpg" alt="ASL L">
+    <video controls>
+      <source src="assets/videos/L.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Extend your thumb and index finger to form an L shape.</p>
+  </div>
+<!-- Harf M -->
+<div class="letter-card">
+    <h3>🅼 Letter M</h3>
+    <img src="assets/images/M.jpg" alt="ASL M">
+    <video controls>
+      <source src="assets/videos/M.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Place your thumb under your first three fingers while keeping the pinky extended.</p>
+  </div>
+  
+  <!-- Harf N -->
+  <div class="letter-card">
+    <h3>🅽 Letter N</h3>
+    <img src="assets/images/N.jpg" alt="ASL N">
+    <video controls>
+      <source src="assets/videos/N.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Place your thumb between your middle and ring fingers while keeping the other fingers curled.</p>
+  </div>
+  
+  <!-- Harf O -->
+  <div class="letter-card">
+    <h3>🅾️ Letter O</h3>
+    <img src="assets/images/O.jpg" alt="ASL O">
+    <video controls>
+      <source src="assets/videos/O.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Form a circle with all your fingers touching at the tips to make an 'O' shape.</p>
+  </div>
+<!-- Harf P -->
+<div class="letter-card">
+    <h3>🅿️ Letter P</h3>
+    <img src="assets/images/P.jpg" alt="ASL P">
+    <video controls>
+      <source src="assets/videos/P.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Form the K handshape and rotate your hand downward to resemble the letter P.</p>
+  </div>
+  
+  <!-- Harf Q -->
+  <div class="letter-card">
+    <h3>🇶 Letter Q</h3>
+    <img src="assets/images/Q.jpg" alt="ASL Q">
+    <video controls>
+      <source src="assets/videos/Q.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Form the G handshape and point it downward to resemble the letter Q.</p>
+  </div>
+  
+  <!-- Harf R -->
+  <div class="letter-card">
+    <h3>🇷 Letter R</h3>
+    <img src="assets/images/R.jpg" alt="ASL R">
+    <video controls>
+      <source src="assets/videos/R.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Cross your index and middle fingers with the palm facing forward.</p>
+  </div>
+<!-- Harf S -->
+<div class="letter-card">
+    <h3>🇸 Letter S</h3>
+    <img src="assets/images/S.jpg" alt="ASL S">
+    <video controls>
+      <source src="assets/videos/S.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Make a fist with the thumb crossing in front of the fingers.</p>
+  </div>
+  
+  <!-- Harf T -->
+  <div class="letter-card">
+    <h3>🇹 Letter T</h3>
+    <img src="assets/images/T.jpg" alt="ASL T">
+    <video controls>
+      <source src="assets/videos/T.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Tuck your thumb between your index and middle fingers while making a fist.</p>
+  </div>
+  
+  <!-- Harf U -->
+  <div class="letter-card">
+    <h3>🇺 Letter U</h3>
+    <img src="assets/images/U.jpg" alt="ASL U">
+    <video controls>
+      <source src="assets/videos/U.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Raise your index and middle fingers together pointing upward, with the other fingers tucked in.</p>
+  </div>
+<!-- Harf V -->
+<div class="letter-card">
+    <h3>🇻 Letter V</h3>
+    <img src="assets/images/V.jpg" alt="ASL V">
+    <video controls>
+      <source src="assets/videos/V.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Raise your index and middle fingers in a V shape, palm facing out.</p>
+  </div>
+  
+  <!-- Harf W -->
+  <div class="letter-card">
+    <h3>🇼 Letter W</h3>
+    <img src="assets/images/W.jpg" alt="ASL W">
+    <video controls>
+      <source src="assets/videos/W.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Raise your index, middle, and ring fingers to form a W shape.</p>
+  </div>
+  
+  <!-- Harf X -->
+  <div class="letter-card">
+    <h3>🇽 Letter X</h3>
+    <img src="assets/images/X.jpg" alt="ASL X">
+    <video controls>
+      <source src="assets/videos/X.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Bend your index finger into a hook shape, palm facing forward.</p>
+  </div>
+<!-- Harf Y -->
+<div class="letter-card">
+    <h3>🇾 Letter Y</h3>
+    <img src="assets/images/Y.jpg" alt="ASL Y">
+    <video controls>
+      <source src="assets/videos/Y.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Extend your thumb and pinky finger while keeping the other fingers curled into your palm.</p>
+  </div>
+  
+  <!-- Harf Z -->
+  <div class="letter-card">
+    <h3>🇿 Letter Z</h3>
+    <img src="assets/images/Z.jpg" alt="ASL Z">
+    <video controls>
+      <source src="assets/videos/Z.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p><strong>Description:</strong> Use your index finger to trace the shape of the letter Z in the air.</p>
+  </div>
+     </section>
+
+     <section style="text-align: center; margin-top: 30px;">
+        <a href="quiz.html" class="mini-quiz-button">📝 Start Quiz</a>
+      </section>
+      
+      
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      © 2025 Sign Language Project | Made with 🤍
+    </div>
+  </footer>
+   
+   </div> <!-- /.main-container -->
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+  
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    const profileLink = document.getElementById("profileLink");
+    const logoutLink = document.getElementById("logoutLink");
+    const logoutBtn = document.getElementById("logoutBtn");
+  
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginLink.style.display = "none";
+        registerLink.style.display = "none";
+        profileLink.style.display = "inline";
+        logoutLink.style.display = "inline";
+      } else {
+        loginLink.style.display = "inline";
+        registerLink.style.display = "inline";
+        profileLink.style.display = "none";
+        logoutLink.style.display = "none";
+      }
+    });
+  
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        signOut(auth).then(() => {
+          alert("👋 You have been signed out.");
+          window.location.href = "index.html";
+        }).catch((error) => {
+          alert("❌ Error signing out: " + error.message);
+        });
+      });
+    }
+  
+    // 🔍 Search filter for ASL letters
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("keyup", function () {
+      const filter = searchInput.value.toUpperCase();
+      const cards = document.querySelectorAll(".letter-card");
+  
+      cards.forEach(card => {
+        const title = card.querySelector("h3").textContent.toUpperCase();
+        if (title.includes(filter)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  </script>  
+  
+</body>
+</html>

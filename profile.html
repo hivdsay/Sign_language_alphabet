@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile - ASL Learning</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #f3e5f5, #e1bee7);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .profile-container {
+      max-width: 520px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    .profile-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+    .profile-container h2 {
+      font-size: 2.2rem;
+      color: #7b1fa2;
+      margin-bottom: 18px;
+      text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .profile-info {
+      font-size: 1.15rem;
+      color: #333;
+      text-align: left;
+      padding: 10px 20px;
+      background: #f8f9fc;
+      border-radius: 10px;
+      line-height: 1.7;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+    }
+    .profile-info p {
+      margin: 10px 0;
+    }
+    .profile-info strong {
+      color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h2>👤 My Profile</h2>
+    <div class="profile-info" id="profileInfo">
+      Loading profile...
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const profileInfo = document.getElementById("profileInfo");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          profileInfo.innerHTML = `
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Quiz Score:</strong> ${data.quizScore}</p>
+          `;
+        } else {
+          profileInfo.textContent = "No profile data found.";
+        }
+      } else {
+        // ❌ Kullanıcı giriş yapmamışsa login'e yönlendir
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register - ASL Learning</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>📝 Create Account</h2>
+    <form id="registerForm">
+      <input type="email" id="email" placeholder="📧 Email" required />
+      <input type="password" id="password" placeholder="🔒 Password" required />
+      <button type="submit" class="button">Register</button>
+    </form>
+    <div id="successMessage">✅ Account created! Redirecting to login...</div>
+    <div class="links">
+      <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("registerForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Save to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          createdAt: new Date(),
+          quizScore: 0,
+          progress: [],
+          role: "user"
+        });
+
+        successMessage.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
+      } catch (error) {
+        alert("❌ " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Quiz Results</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Ortala + footer’ı en alta sabitle */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    /* Header ve footer ortala */
+    .main-container > header,
+    .main-container > footer {
+      text-align: center;
+    }
+    /* Main içeriği alttaki footer hariç doldursun */
+    .main-container > main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Canvas kapsayıcısı */
+    .chart-wrapper {
+      width: 100%;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+
+    <header>
+      <h1>📈 My Quiz Progress</h1>
+      <p class="subtitle">See how you've improved over time!</p>
+    </header>
+
+    <main>
+      <div class="chart-wrapper">
+        <canvas id="progressChart" width="400" height="200"></canvas>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 Sign Language Project | Made with 🤍
+    </footer>
+
+  </div> <!-- /.main-container -->
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzdboT3cZDiBiQjoMXX0Q-KFKqi8fy30c",
+      authDomain: "asl-project-6113f.firebaseapp.com",
+      projectId: "asl-project-6113f",
+      storageBucket: "asl-project-6113f.appspot.com",
+      messagingSenderId: "443836688619",
+      appId: "1:443836688619:web:922c820453b869ecb1b6ae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const ctx = document.getElementById("progressChart").getContext("2d");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const q = query(
+            collection(db, "quizResults"),
+            where("userId", "==", user.uid),
+            orderBy("timestamp", "asc")
+          );
+
+          const snapshot = await getDocs(q);
+
+          const data = snapshot.docs
+            .filter(doc => doc.data().timestamp) // timestamp varsa al
+            .map(doc => ({
+              date: new Date(doc.data().timestamp.seconds * 1000).toLocaleString("en-GB"), // 18/04/2025 16:40
+              score: doc.data().score
+            }));
+
+          if (data.length === 0) {
+            document.getElementById("progressChart").parentElement.innerHTML = "<p style='text-align:center;'>No quiz results found.</p>";
+            return;
+          }
+
+          const labels = data.map(item => item.date);
+          const scores = data.map(item => item.score);
+
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: labels,
+              datasets: [{
+                label: "Quiz Score",
+                data: scores,
+                borderColor: "rgba(103, 58, 183, 1)",
+                backgroundColor: "rgba(103, 58, 183, 0.1)",
+                fill: true,
+                tension: 0.3
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 15
+                }
+              }
+            }
+          });
+
+        } catch (err) {
+          console.error("🔥 Chart error:", err.message);
+          document.getElementById("progressChart").parentElement.innerHTML = `<p style='text-align:center;'>Error loading chart: ${err.message}</p>`;
+        }
+      } else {
+        alert("⚠️ Please log in to see your progress.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

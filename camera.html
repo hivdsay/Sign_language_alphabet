@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ASL Tahmin Sistemi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+    }
+    video {
+      border: 3px solid #6a1b9a;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    #prediction {
+      font-size: 32px;
+      margin-top: 20px;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    #debug {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+</head>
+<body>
+  <h1>📷 AI Test</h1>
+  <video id="video" width="640" height="480" autoplay muted playsinline></video>
+  <div id="prediction">Detecting...</div>
+  <div id="debug"></div>
+
+  <script>
+    const videoElement = document.getElementById('video');
+    const predictionElement = document.getElementById('prediction');
+    const debugElement = document.getElementById('debug');
+
+    function distance(p1, p2) {
+      const dx = p1.x - p2.x;
+      const dy = p1.y - p2.y;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function isFingerUp(tip, pip) {
+      return tip.y < pip.y;
+    }
+
+    function isThumbUp(thumb_tip, thumb_ip, isRight) {
+      return isRight ? thumb_tip.x < thumb_ip.x : thumb_tip.x > thumb_ip.x;
+    }
+
+    function recognizeLetter(lm, handednessLabel) {
+      const isRight = handednessLabel === 'Right';
+
+      const thumbUp = isThumbUp(lm[4], lm[3], isRight);
+      const indexUp = isFingerUp(lm[8], lm[6]);
+      const middleUp = isFingerUp(lm[12], lm[10]);
+      const ringUp = isFingerUp(lm[16], lm[14]);
+      const pinkyUp = isFingerUp(lm[20], lm[18]);
+
+      const t_i = distance(lm[4], lm[8]);
+      const t_m = distance(lm[4], lm[12]);
+      const t_r = distance(lm[4], lm[16]);
+      const t_p = distance(lm[4], lm[20]);
+      const i_m = distance(lm[8], lm[12]);
+      const t_palm = distance(lm[4], lm[9]); // başparmak ile avuç merkezi
+
+      debugElement.innerText = `El: ${handednessLabel}\nBaşparmak yukarı mı? ${thumbUp}\nİşaret yukarı mı? ${indexUp}\nMesafeler (T-I): ${t_i.toFixed(3)} | (T-M): ${t_m.toFixed(3)} | (I-M): ${i_m.toFixed(3)} | (T-Palm): ${t_palm.toFixed(3)}`;
+
+      // A ve S ayrımı
+      if (t_i > 0.08 && !indexUp && !middleUp && !ringUp && !pinkyUp && thumbUp) return 'A';
+      if (t_palm < 0.05 && !thumbUp && !indexUp && !middleUp && !ringUp && !pinkyUp) return 'S';
+
+      // Geliştirilmiş E kuralı
+      if (
+        t_i < 0.05 &&
+        !indexUp && !middleUp && !ringUp && !pinkyUp &&
+        !thumbUp &&
+        t_palm >= 0.05 && t_palm <= 0.09
+      ) return 'E';
+
+      // Diğer harfler
+      if (!thumbUp && indexUp && middleUp && ringUp && pinkyUp) return 'B';
+      if (t_i > 0.1 && indexUp && middleUp && ringUp && pinkyUp) return 'C';
+      if (indexUp && !middleUp && !ringUp && !pinkyUp && t_m < 0.08) return 'D';
+      if (t_i < 0.05 && middleUp && ringUp && pinkyUp) return 'F';
+      if (thumbUp && indexUp && !middleUp && !ringUp && !pinkyUp) return 'G';
+      if (indexUp && middleUp && !ringUp && !pinkyUp && t_i > 0.1) return 'H';
+      if (!indexUp && !middleUp && !ringUp && pinkyUp) return 'I';
+      if (thumbUp && indexUp && middleUp && !ringUp && !pinkyUp) return 'K';
+      if (thumbUp && indexUp && !middleUp && !ringUp && !pinkyUp) return 'L';
+      if (!thumbUp && !indexUp && !middleUp && ringUp && pinkyUp) return 'M';
+      if (!thumbUp && !indexUp && middleUp && ringUp && pinkyUp) return 'N';
+      if (t_i < 0.05 && t_p < 0.05) return 'O';
+      if (thumbUp && indexUp && middleUp && !ringUp && !pinkyUp) return 'P';
+      if (thumbUp && !indexUp && !middleUp && !ringUp && !pinkyUp) return 'Q';
+      if (indexUp && middleUp && !ringUp && !pinkyUp && i_m < 0.05) return 'R';
+      if (!thumbUp && !indexUp && middleUp && !ringUp && !pinkyUp) return 'T';
+      if (indexUp && middleUp && !ringUp && !pinkyUp) return 'U';
+      if (indexUp && middleUp && !ringUp && !pinkyUp) return 'V';
+      if (indexUp && middleUp && ringUp && !pinkyUp) return 'W';
+      if (indexUp && !middleUp && !ringUp && pinkyUp) return 'X';
+      if (thumbUp && !indexUp && !middleUp && !ringUp && pinkyUp) return 'Y';
+
+      return '-';
+    }
+
+    const hands = new Hands({
+      locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    });
+    hands.setOptions({
+      maxNumHands: 1,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.7,
+      minTrackingConfidence: 0.5
+    });
+
+    hands.onResults(results => {
+      if (
+        results.multiHandLandmarks &&
+        results.multiHandLandmarks.length > 0 &&
+        results.multiHandedness
+      ) {
+        const handLabel = results.multiHandedness[0].label;
+        const landmarks = results.multiHandLandmarks[0];
+        const letter = recognizeLetter(landmarks, handLabel);
+        predictionElement.innerText = `Detected: ${letter}`;
+      } else {
+        predictionElement.innerText = 'Detecting...';
+        debugElement.innerText = '';
+      }
+    });
+
+    const camera = new Camera(videoElement, {
+      onFrame: async () => await hands.send({ image: videoElement }),
+      width: 640,
+      height: 480
+    });
+    camera.start();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

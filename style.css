@@ -1,0 +1,353 @@
+/* ------------------ GLOBAL ------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fdfcfb;
+  color: #333;
+  display: flex;
+}
+
+/* ------------------ SIDEBAR NAVIGATION ------------------ */
+nav {
+  background: linear-gradient(to bottom, #f3e5f5, #ede7f6);
+  width: 220px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 40px;
+  border-right: 1px solid #ddd;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  padding: 14px 24px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #6a1b9a;
+  font-weight: 600;
+  display: block;
+  font-size: 1.1rem;
+  transition: background 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #e1bee7;
+  border-radius: 8px;
+}
+
+/* ------------------ HEADER ------------------ */
+header {
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  border-bottom: 2px solid #cbd5e1;
+ 
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1.2px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 20px 40px;
+  border-radius: 40px;
+  display: inline-block;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+  display: block;
+  font-size: 1rem;
+  font-style: italic;
+  color: #f3e5f5;
+  margin-top: 10px;
+}
+
+/* ------------------ MAIN ------------------ */
+main {
+  margin-left: 240px;
+  padding: 40px 30px;
+  max-width: 960px;
+  width: 100%;
+}
+
+/* ------------------ SECTIONS ------------------ */
+section {
+  background-color: white;
+  margin-bottom: 30px;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+section:nth-child(even) {
+  background-color: #f8f9fc;
+}
+
+section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  color: #6a1b9a;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  position: relative;
+  padding-left: 10px;
+}
+
+section h2::before {
+  content: "✨";
+  position: absolute;
+  left: -30px;
+  font-size: 1.4rem;
+  top: 0;
+}
+
+section p, section li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+section ul li::before {
+  content: "• ";
+  color: #ff7043;
+  font-weight: bold;
+}
+
+/* ------------------ FOOTER ------------------ */
+footer {
+  text-align: center;
+  background-color: #e1bee7;
+  padding: 18px;
+  font-weight: bold;
+  color: #4a148c;
+  margin-top: 60px;
+  /* margin-left: 220px; --> kaldırıldı */
+}
+
+/* ------------------ HEADER & FOOTER ORTALAMA ------------------ */
+.main-container > header {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-bottom: 40px;    /* ← işte bu satır boşluğu arttırır */
+}
+.main-container > footer {
+  max-width: 960px;   /* main’ın max-width’ü ile aynı */
+  margin: 0 auto;     /* yatayda ortala */
+  padding: 0 20px;    /* mobilde kenar boşluğu */
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 768px) {
+  nav {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 0;
+  }
+  .main-container > header,
+  main, 
+  .main-container > footer {
+    margin-left: 0;
+  }
+  nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  nav li {
+    margin: 10px;
+  }
+}
+
+/* ------------------ VIDEO & CARD ------------------ */
+video {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 2px solid #eee;
+}
+
+iframe {
+  border-radius: 12px;
+  border: none;
+  max-width: 100%;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.card video {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+/* ---------- LOGIN / REGISTER AUTH FORM ---------- */
+.auth-container {
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: 60px auto;
+  animation: fadeInUp 1s ease;
+}
+
+.auth-container h2 {
+  color: #6a1b9a;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.auth-container .button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #7b1fa2, #512da8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+
+.auth-container .button:hover {
+  transform: scale(1.05);
+}
+
+.auth-container #successMessage {
+  display: none;
+  background-color: #e0f7fa;
+  color: #006064;
+  padding: 12px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.auth-container .links {
+  margin-top: 20px;
+}
+
+.auth-container .links a {
+  color: #6a1b9a;
+  text-decoration: none;
+  font-weight: 500;
+}
+/* ———————————————————————————————————————————————
+   Footer’ın içindeki metin bloğunu ortalamak için
+——————————————————————————————————————————————— */
+footer .footer-inner {
+  max-width: 960px;      /* main ile aynı genişlik */
+  margin: 0 auto;        /* yatayda tam ortala */
+  padding: 18px 20px;    /* üst-alt ve yan boşluk */
+  text-align: center;    /* içeriği ortala */
+}
+/* style.css dosyanın en altına ekle */
+
+/* 1) main içeriğini sabitle ve ortala */
+.main-container > main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 2) section’ların tamamı bu kapsayıcıya uyacak */
+.main-container > main section {
+  width: 100%;
+}
+
+/* 3) letter-grid içindeki kartları ortalamak için */
+.letter-grid {
+  justify-content: center;  /* grid içeriğini yatayda ortaya al */
+}
+
+/* 4) footer’ı da sayfa ortasına sabitle */
+.main-container > footer {
+  max-width: 960px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+ /* 1) Main içeriğini sabitle ve ortala */
+.main-container > main {
+  max-width: 960px;
+  margin: 0 auto;       /* yatayda ortala */
+  padding: 0 20px;      /* kenar boşlukları */
+}
+
+/* 2) Section’ların tamamı bu kapsayıcıya uyacak */
+.main-container > main section {
+  width: 100%;
+}
+
+/* 3) letter-grid içindeki kartları ortalamak için */
+.letter-grid {
+  /* zaten display: grid; kullanıyorsun */
+  justify-content: center;  /* grid’i ortala */
+}
+
+/* 4) Footer’ı da sayfa ortasına sabitle */
+.main-container > footer {
+  max-width: 960px;
+  margin: 40px auto 0;   /* üstten 40px, yatayda ortala */
+  text-align: center;
+  padding: 0 20px;
+}
